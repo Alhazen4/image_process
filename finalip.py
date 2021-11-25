@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.brightness)
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setText("Input your image by clicking the 'Open' button")
+        self.label.setText("Input your image by clicking the 'Open' button \n If the image doesn't exist and you start editing, the program will crash!")
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
