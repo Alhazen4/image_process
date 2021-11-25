@@ -26,8 +26,8 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.brightness)
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("foto/baboon.png"))
+        self.label.setText("Input your image by clicking the 'Open' button")
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
 
@@ -106,8 +106,7 @@ class Ui_MainWindow(object):
         self.label.setPixmap(QtGui.QPixmap.fromImage(image))
   
     def savefile(self):
-        filename = QFileDialog.getSaveFileName(filter="JPG(*.jpg);;PNG(*.png);;TIFF(*.tiff);;BMP(*.bmp)")[0]
-        
+        filename = QFileDialog.getSaveFileName(filter="JPG(*.jpg);;PNG(*.png);;TIFF(*.tiff);;BMP(*.bmp)")[0]   
         cv2.imwrite(filename,self.tmp)
         print('Image saved as:',self.filename)
 
@@ -118,10 +117,9 @@ class Ui_MainWindow(object):
 		
 		
     def blur_value(self,value):
-            self.blur_value_now = value
-            print('Blur: ',value)
-            self.update()
-	
+        self.blur_value_now = value
+        print('Blur: ',value)
+        self.update()
 	
     def changeBrightness(self,img,value):
         hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
@@ -143,7 +141,6 @@ class Ui_MainWindow(object):
         img = self.changeBlur(img,self.blur_value_now)
         self.setPhoto(img)
     
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         
