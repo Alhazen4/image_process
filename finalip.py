@@ -9,17 +9,23 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(619, 602)
+
+        #centralWidget as main widget or layout
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+
+
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
+
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
 
+        #Slider for brightness effect
         self.brightness = QtWidgets.QSlider(self.centralwidget)
         self.brightness.setOrientation(QtCore.Qt.Vertical)
         self.brightness.setObjectName("brightness")
@@ -31,44 +37,42 @@ class Ui_MainWindow(object):
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
 
+        #Slider for blur effect
         self.blur = QtWidgets.QSlider(self.centralwidget)
         self.blur.setOrientation(QtCore.Qt.Vertical)
         self.blur.setObjectName("blur")
 
+        #Layout for store the button object
         self.horizontalLayout.addWidget(self.blur)
         self.horizontalLayout_3.addLayout(self.horizontalLayout)
         self.gridLayout.addLayout(self.horizontalLayout_3, 0, 0, 1, 2)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
 
+        #Button open
         self.open = QtWidgets.QPushButton(self.centralwidget)
         self.open.setObjectName("open")
-
         self.horizontalLayout_2.addWidget(self.open)
 
+        #Button save
         self.save = QtWidgets.QPushButton(self.centralwidget)
         self.save.setObjectName("save")
-
         self.horizontalLayout_2.addWidget(self.save)
 
         self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_5.setObjectName("pushButton_5")
-
         self.horizontalLayout_2.addWidget(self.pushButton_5)
 
         self.pushButton_6 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_6.setObjectName("pushButton_6")
-
         self.horizontalLayout_2.addWidget(self.pushButton_6)
 
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_4.setObjectName("pushButton_4")
-        
         self.horizontalLayout_2.addWidget(self.pushButton_4)
 
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_3.setObjectName("pushButton_3")
-
         self.horizontalLayout_2.addWidget(self.pushButton_3)
 
         self.gridLayout.addLayout(self.horizontalLayout_2, 1, 0, 1, 2)
@@ -82,9 +86,10 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+        #Signal trigger to functions
         self.blur.valueChanged['int'].connect(self.blur_value)
         self.brightness.valueChanged['int'].connect(self.brightness_value)
-
         self.open.clicked.connect(self.openfile)
         self.save.clicked.connect(self.savefile)
 
@@ -103,7 +108,7 @@ class Ui_MainWindow(object):
         image = imutils.resize(image,width=640)
         frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)		  
         image = QImage(frame, frame.shape[1],frame.shape[0],frame.strides[0],QImage.Format_RGB888)
-        self.label.setPixmap(QtGui.QPixmap.fromImage(image))
+        self.label.setPixmap(QtGui.QPixmap.fromImage(image)) #Store the image to label
   
     def savefile(self):
         filename = QFileDialog.getSaveFileName(filter="JPG(*.jpg);;PNG(*.png);;TIFF(*.tiff);;BMP(*.bmp)")[0]   
@@ -114,7 +119,6 @@ class Ui_MainWindow(object):
         self.brightness_value_now = value
         print('Brightness: ',value)
         self.update()
-		
 		
     def blur_value(self,value):
         self.blur_value_now = value
