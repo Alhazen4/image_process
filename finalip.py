@@ -117,9 +117,9 @@ class Ui_MainWindow(object):
 
     def brightness_value(self,value):
         self.brightness_value_now = value
-        print('Brightness: ',value)
+        #print('Brightness: ',value)
         self.update()
-		
+
     def blur_value(self,value):
         self.blur_value_now = value
         print('Blur: ',value)
@@ -142,6 +142,8 @@ class Ui_MainWindow(object):
 
     def update(self):
         img = self.changeBrightness(self.image,self.brightness_value_now)
+        #Show brightness value on statusbar
+        self.statusbar.showMessage('Brightness:  %s \n' % str(self.brightness_value_now))
         img = self.changeBlur(img,self.blur_value_now)
         self.setPhoto(img)
     
