@@ -103,6 +103,14 @@ class Ui_MainWindow(object):
         self.save.setObjectName("save")
         self.horizontalLayout_2.addWidget(self.save)
 
+        self.resize = QtWidgets.QPushButton(self.centralwidget)
+        self.resize.setObjectName("resize")
+        self.horizontalLayout_2.addWidget(self.resize)
+
+        self.crop = QtWidgets.QPushButton(self.centralwidget)
+        self.crop.setObjectName("crop")
+        self.horizontalLayout_2.addWidget(self.crop)
+
         self.gridLayout.addLayout(self.horizontalLayout_2, 1, 0, 1, 2)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
 
@@ -229,6 +237,8 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MaPikcer"))
         self.open.setText(_translate("MainWindow", "Open"))
         self.save.setText(_translate("MainWindow", "Save"))
+        self.resize.setText(_translate("MainWindow", "Resize"))
+        self.crop.setText(_translate("MainWindow", "Crop"))
 
 if __name__ == "__main__":
     import sys
