@@ -91,33 +91,19 @@ class Ui_MainWindow(object):
 
         self.open = QtWidgets.QPushButton(self.centralwidget)
         self.open.setObjectName("open")
-
         self.horizontalLayout_2.addWidget(self.open)
 
         self.save = QtWidgets.QPushButton(self.centralwidget)
         self.save.setObjectName("save")
-
         self.horizontalLayout_2.addWidget(self.save)
 
         self.resize = QtWidgets.QPushButton(self.centralwidget)
         self.resize.setObjectName("resize")
-
-        self.horizontalLayout_2.addWidget(self.pushButton_5)
+        self.horizontalLayout_2.addWidget(self.resize)
 
         self.crop = QtWidgets.QPushButton(self.centralwidget)
         self.crop.setObjectName("crop")
-
-        self.horizontalLayout_2.addWidget(self.pushButton_6)
-
-        # self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
-        # self.pushButton_4.setObjectName("pushButton_4")
-        
-        # self.horizontalLayout_2.addWidget(self.pushButton_4)
-
-        # self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        # self.pushButton_3.setObjectName("pushButton_3")
-
-        # self.horizontalLayout_2.addWidget(self.pushButton_3)
+        self.horizontalLayout_2.addWidget(self.crop)
 
         self.gridLayout.addLayout(self.horizontalLayout_2, 1, 0, 1, 2)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
@@ -139,8 +125,7 @@ class Ui_MainWindow(object):
 
         self.open.clicked.connect(self.openfile)
         self.save.clicked.connect(self.savefile)
-        self.resize.clicked.connect(self.resize)
-        self.crop.clicked.connect(self.crop)
+        
 
         self.filename = None # Will hold the image address location
         self.tmp = None # Will hold the temporary image for display
@@ -247,8 +232,6 @@ class Ui_MainWindow(object):
         self.save.setText(_translate("MainWindow", "Save"))
         self.resize.setText(_translate("MainWindow", "Resize"))
         self.crop.setText(_translate("MainWindow", "Crop"))
-        # self.pushButton_4.setText(_translate("MainWindow", "PushButton"))
-        # self.pushButton_3.setText(_translate("MainWindow", "PushButton"))
 
 
 if __name__ == "__main__":
