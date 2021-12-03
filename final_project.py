@@ -109,9 +109,9 @@ class Ui_MainWindow(object):
         self.blackwhite.setObjectName("blackwhite")
         self.horizontalLayout_2.addWidget(self.blackwhite)
 
-        self.crop = QtWidgets.QPushButton(self.centralwidget)
-        self.crop.setObjectName("crop")
-        self.horizontalLayout_2.addWidget(self.crop)
+        # self.crop = QtWidgets.QPushButton(self.centralwidget)
+        # self.crop.setObjectName("crop")
+        # self.horizontalLayout_2.addWidget(self.crop)
 
         self.gridLayout.addLayout(self.horizontalLayout_2, 1, 0, 1, 2)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
@@ -133,7 +133,7 @@ class Ui_MainWindow(object):
         self.open.clicked.connect(self.openfile)
         self.save.clicked.connect(self.savefile)
         self.negative.clicked.connect(self.negative_image)
-        self.crop.clicked.connect(self.cropimg)
+        # self.crop.clicked.connect(self.cropimg)
         self.blackwhite.clicked.connect(self.blwh)
         
         self.filename = None # Will hold the image address location
@@ -180,11 +180,11 @@ class Ui_MainWindow(object):
         print('Blur: ',value)
         self.update()
 
-    def cropimg(self, img):
-        # img = self.update()
-        roi = cv2.selectROI(img)
-        img = img[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
-        self.setPhoto(img)
+    # def cropimg(self, img):
+    #     # img = self.update()
+    #     roi = cv2.selectROI(img)
+    #     img = img[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
+    #     self.setPhoto(img)
 
     def changeBrightness(self,img,value):
         hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
@@ -252,7 +252,7 @@ class Ui_MainWindow(object):
         self.open.setText(_translate("MainWindow", "Open"))
         self.save.setText(_translate("MainWindow", "Save"))
         self.negative.setText(_translate("MainWindow", "Negative"))
-        self.crop.setText(_translate("MainWindow", "Crop"))
+        # self.crop.setText(_translate("MainWindow", "Crop"))
         self.blackwhite.setText(_translate("MainWindow", "Black&White"))
         self.horizontalLayout.addWidget(self.lineEdit)
 
