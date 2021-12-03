@@ -8,7 +8,7 @@ from PyQt5.QtGui import QImage
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(619, 602)
+        MainWindow.resize(520, 500)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
@@ -19,11 +19,23 @@ class Ui_MainWindow(object):
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit.setPlaceholderText("Value")
         self.lineEdit.setObjectName("lineEdit")
-        self.lineEdit.setContentsMargins(2, 2, 2, 2)
-        
         self.lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.lineEdit.setMinimumHeight(40)
         self.lineEdit.setMaximumWidth(150)
+
+        self.width = QtWidgets.QLineEdit(self.centralwidget)
+        self.width.setPlaceholderText("Width")
+        self.width.setObjectName("width")
+        self.width.setAlignment(QtCore.Qt.AlignCenter)
+        self.width.setMinimumHeight(40)
+        self.width.setMaximumWidth(150)
+
+        self.height = QtWidgets.QLineEdit(self.centralwidget)
+        self.height.setPlaceholderText("Height")
+        self.height.setObjectName("height")
+        self.height.setAlignment(QtCore.Qt.AlignCenter)
+        self.height.setMinimumHeight(40)
+        self.height.setMaximumWidth(150)
         
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setObjectName("label")
@@ -109,6 +121,10 @@ class Ui_MainWindow(object):
         self.blackwhite.setObjectName("blackwhite")
         self.horizontalLayout_2.addWidget(self.blackwhite)
 
+        self.resize = QtWidgets.QPushButton(self.centralwidget)
+        self.resize.setObjectName("blackwhite")
+        self.horizontalLayout_2.addWidget(self.resize)
+
         # self.crop = QtWidgets.QPushButton(self.centralwidget)
         # self.crop.setObjectName("crop")
         # self.horizontalLayout_2.addWidget(self.crop)
@@ -135,6 +151,7 @@ class Ui_MainWindow(object):
         self.negative.clicked.connect(self.negative_image)
         # self.crop.clicked.connect(self.cropimg)
         self.blackwhite.clicked.connect(self.blwh)
+        self.resize.clicked.connect(self.resize_img)
         
         self.filename = None # Will hold the image address location
         self.tmp = None # Will hold the temporary image for display
@@ -144,30 +161,36 @@ class Ui_MainWindow(object):
         self.contrast_value_now = 127
 
     def openfile(self):
-        self.filename = QFileDialog.getOpenFileName(filter="Image (*.*)")[0]
-        self.image = cv2.imread(self.filename)
-        self.setPhoto(self.image)
+        try:
+            self.filename = QFileDialog.getOpenFileName(filter = "Image (*.*)")[0]
+            self.image = cv2.imread(self.filename)
+            self.setPhoto(self.image)
+        except:
+            print("Open file canceled")
       
-    def setPhoto(self,image):
+    def setPhoto(self, image):
         self.tmp = image
-        image = imutils.resize(image,width=640)
+        image = imutils.resize(image, width = 400)
         frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)		  
-        image = QImage(frame, frame.shape[1],frame.shape[0],frame.strides[0],QImage.Format_RGB888)
+        image = QImage(frame, frame.shape[1], frame.shape[0], frame.strides[0], QImage.Format_RGB888)
         self.label.setPixmap(QtGui.QPixmap.fromImage(image))
   
     def savefile(self):
-        filename = QFileDialog.getSaveFileName(filter="JPG(*.jpg);;PNG(*.png);;TIFF(*.tiff);;BMP(*.bmp)")[0]   
-        cv2.imwrite(filename, self.tmp)
-        print('Image saved as:', self.filename)
+        try:
+            filename = QFileDialog.getSaveFileName(filter = "JPG(*.jpg);;PNG(*.png);;TIFF(*.tiff);;BMP(*.bmp)")[0]   
+            cv2.imwrite(filename, self.tmp)
+            print('Image saved as:', self.filename)
+        except:
+            print("Save file canceled")
 
-    def brightness_value(self,value):
+    def brightness_value(self, value):
         self.brightness_value_now = value
-        print('Brightness: ',value)
+        print('Brightness:', value)
         self.update()
 		
-    def blur_value(self,value):
+    def blur_value(self, value):
         self.blur_value_now = value
-        print('Blur: ',value)
+        print('Blur:', value)
         self.update()
 
     def rotate_value(self, value):
@@ -177,7 +200,7 @@ class Ui_MainWindow(object):
 
     def contrast_value(self, value):
         self.contrast_value_now = value
-        print('Blur: ',value)
+        print('Blur:', value)
         self.update()
 
     # def cropimg(self, img):
@@ -186,19 +209,19 @@ class Ui_MainWindow(object):
     #     img = img[int(roi[1]):int(roi[1]+roi[3]), int(roi[0]):int(roi[0]+roi[2])]
     #     self.setPhoto(img)
 
-    def changeBrightness(self,img,value):
-        hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
-        h,s,v = cv2.split(hsv)
+    def changeBrightness(self, img, value):
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        h, s, v = cv2.split(hsv)
         lim = 255 - value
-        v[v>lim] = 255
-        v[v<=lim] += value
-        final_hsv = cv2.merge((h,s,v))
-        img = cv2.cvtColor(final_hsv,cv2.COLOR_HSV2BGR)
+        v[v > lim] = 255
+        v[v <= lim] += value
+        final_hsv = cv2.merge((h, s, v))
+        img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
         return img
 		
-    def changeBlur(self,img,value):
-        kernel_size = (value+1,value+1) # +1 is to avoid 0
-        img = cv2.blur(img,kernel_size)
+    def changeBlur(self, img,value):
+        kernel_size = (value + 1, value + 1) # +1 is to avoid 0
+        img = cv2.blur(img, kernel_size)
         return img
 
     def changeRotation(self, img, value):
@@ -221,7 +244,7 @@ class Ui_MainWindow(object):
             img = cv2.threshold(self.image, input, 255, cv2.THRESH_BINARY)[1]
             self.setPhoto(img)
         except:
-            print("Error")
+            print("Must Input number")
 
     def blwh(self):
         try:
@@ -230,20 +253,34 @@ class Ui_MainWindow(object):
             img = cv2.threshold(gray_img, input, 255, cv2.THRESH_BINARY)[1]  
             self.setPhoto(img)
         except:
-            print("Error")
+            print("Must Input number")
+
+    def resize_img(self):
+        try:
+            width = int(self.width.text())
+            height = int(self.height.text())
+            dim = (width, height)
+            resize = cv2.resize(self.image, dim, interpolation = cv2.INTER_AREA)
+            self.setPhoto(resize)
+        except:
+            print("Must Input number")
 
     def update(self):
-        img = self.changeBrightness(self.image,self.brightness_value_now)
-        img = self.changeBlur(img,self.blur_value_now)
-        img = self.changeRotation(img, self.rotate_value_now)
-        img = self.changeContrast(img, self.contrast_value_now)
-  
-        self.blu.setText('Brightness: %d' % self.brightness_value_now)
-        self.bri.setText('Blur: %d' % self.blur_value_now)
-        self.rot.setText('Rotation: %d' % self.rotate_value_now)
-        self.con.setText('Contrast: %d' % self.contrast_value_now)
+        try:
+            img = self.changeBrightness(self.image, self.brightness_value_now)
+            img = self.changeBlur(img, self.blur_value_now)
+            img = self.changeRotation(img, self.rotate_value_now)
+            img = self.changeContrast(img, self.contrast_value_now)
+            self.blu.setText('Brightness: %d' % self.brightness_value_now)
+            self.bri.setText('Blur: %d' % self.blur_value_now)
+            self.rot.setText('Rotation: %d' % self.rotate_value_now)
+            self.con.setText('Contrast: %d' % self.contrast_value_now)
         
-        self.setPhoto(img)
+            self.setPhoto(img)
+        except:
+            print("Insert the image")
+  
+        
     
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -252,9 +289,12 @@ class Ui_MainWindow(object):
         self.open.setText(_translate("MainWindow", "Open"))
         self.save.setText(_translate("MainWindow", "Save"))
         self.negative.setText(_translate("MainWindow", "Negative"))
+        self.resize.setText(_translate("MainWindow", "Resize"))
         # self.crop.setText(_translate("MainWindow", "Crop"))
         self.blackwhite.setText(_translate("MainWindow", "Black&White"))
         self.horizontalLayout.addWidget(self.lineEdit)
+        self.horizontalLayout.addWidget(self.width)
+        self.horizontalLayout.addWidget(self.height)
 
 if __name__ == "__main__":
     import sys
